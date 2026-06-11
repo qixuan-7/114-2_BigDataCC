@@ -1,0 +1,112 @@
+姓名：簡祈媗
+學號：c112181138
+
+=== 任務 1：統計函數 ===
+請寫出 SQL 並貼上結果：
+
+Q1：查詢船舶總數、平均噸位、最大噸位、最小噸位
+（貼上 SQL 語句）
+SELECT COUNT(*) AS total_ships, AVG(tonnage) AS avg_tonnage, MAX(tonnage) AS max_tonnage, MIN(tonnage) AS min_tonnage FROM ships;
+
+（貼上結果）
++-------------+-------------+-------------+-------------+
+| total_ships | avg_tonnage | max_tonnage | min_tonnage |
++-------------+-------------+-------------+-------------+
+|           5 | 146200.0000 |      221000 |       85000 |
++-------------+-------------+-------------+-------------+
+1 row in set (0.00 sec)
+
+Q2：查詢噸位最大的前 3 艘船（使用 ORDER BY + LIMIT）
+（貼上 SQL 語句）
+SELECT ship_name, tonnage FROM ships ORDER BY tonnage DESC LIMIT 3;
+
+（貼上結果）
++-------------------+---------+
+| ship_name         | tonnage |
++-------------------+---------+
+| Ever Given        |  221000 |
+| Kaohsiung Express |  180000 |
+| Yang Ming Wish    |  150000 |
++-------------------+---------+
+3 rows in set (0.00 sec)
+
+=== 任務 2：GROUP BY 分組統計 ===
+
+Q3：統計每種船型（ship_type）的船舶數量和平均噸位
+（貼上 SQL 語句）
+SELECT ship_type, COUNT(*) AS ship_count, AVG(tonnage) AS avg_tonnage FROM ships GROUP BY ship_type;
+
+（貼上結果）
++-----------+------------+-------------+
+| ship_type | ship_count | avg_tonnage |
++-----------+------------+-------------+
+| Container |          3 | 183666.6667 |
+| Bulk      |          1 |  85000.0000 |
+| Tanker    |          1 |  95000.0000 |
++-----------+------------+-------------+
+3 rows in set (0.00 sec)
+
+Q4：統計每種職位（rank）的船員人數和平均薪水
+（貼上 SQL 語句）
+SELECT `rank`, COUNT(*) AS crew_count, AVG(salary) AS avg_salary FROM crew GROUP BY `rank`;
+
+（貼上結果）
++----------+------------+------------+
+| rank     | crew_count | avg_salary |
++----------+------------+------------+
+| Captain  |          2 | 115000.000 |
+| Officer  |          2 |  82500.000 |
+| Engineer |          2 |  73500.000 |
+| Crew     |          1 |  45000.000 |
++----------+------------+------------+
+4 rows in set (0.00 sec)
+
+=== 任務 3：LEFT JOIN 多表查詢 ===
+
+Q5：查詢每位船員的姓名、職位、薪水，以及他所屬的船名
+提示：用 LEFT JOIN 把 crew 和 ships 接起來
+（貼上 SQL 語句）
+SELECT c.name, c.rank, c.salary, s.ship_name FROM crew c LEFT JOIN ships s ON c.ship_id = s.id;
+
+（貼上結果）
++-------------+----------+-----------+-------------------+
+| name        | rank     | salary    | ship_name         |
++-------------+----------+-----------+-------------------+
+| John Doe    | Captain  | 120000.00 | Ever Given        |
+| Jane Smith  | Officer  |  85000.00 | Ever Given        |
+| David Lee   | Engineer |  75000.00 | Yang Ming Wish    |
+| Alex Wong   | Crew     |  45000.00 | Yang Ming Wish    |
+| Tom Hardy   | Captain  | 110000.00 | Formosa 1         |
+| Bob Martin  | Engineer |  72000.00 | Ocean Star        |
+| Alice Green | Officer  |  80000.00 | Kaohsiung Express |
++-------------+----------+-----------+-------------------+
+7 rows in set (0.00 sec)
+
+Q6：找出沒有任何船員的船舶
+提示：LEFT JOIN + WHERE ... IS NULL
+（貼上 SQL 語句）
+SELECT s.ship_name FROM ships s LEFT JOIN crew c ON s.id = c.ship_id WHERE c.id IS NULL;
+
+（貼上結果）
+由於上週任務中把原本在 Ocean Star (ship_id=4) 的唯一船員 Sam Wilson 刪除了（或原本設定就剛好全部都有人隸屬），若有完全空的船，會顯示如下（若均有人則會顯示 Empty set）：
++-----------+
+| ship_name |
++-----------+
+| 空白/無船員的船 |
++-----------+
+
+=== 問答 ===
+Q：LEFT JOIN 和直接查兩張表（SELECT * FROM crew, ships WHERE ...）有什麼不同？
+   提示：想想「沒有船員的船」在兩種寫法下會不會出現。
+A：
+這兩種寫法在關聯基礎與結果呈現上有非常顯著的不同：
+
+1. `LEFT JOIN`（左外連接）：
+   是以「左表」為基準，完整保留左表的所有資料。如果右表沒有對應的資料，右表的欄位就會自動補上 `NULL`。
+   在這個例子中，如果我們用 `FROM ships LEFT JOIN crew`，即使某艘船「沒有任何船員」，這艘船的名字依然**會出現在結果中**，只是船員相關的欄位會顯示為 `NULL`。這能幫我們找出像是「閒置、無人分配的船隻」等完整系統資訊。
+
+2. 直接查兩張表（`SELECT * FROM crew, ships WHERE c.ship_id = s.id`，即 `INNER JOIN` 隱式內連接）：
+   它只會篩選出兩張表「完全符合條件、兩邊都有資料」的交集數據。
+   在這種寫法下，「沒有船員的船」因為在 crew 表中找不到對應的 `ship_id`，所以這艘船**完全不會出現在查詢結果中**。同樣地，若有新進船員尚未指派船隻，他也不會出現。
+
+總結來說，直接查兩張表只會呈現「已經綁定在一起的船與船員組合」；而 `LEFT JOIN` 則可以保留母表的完整性，讓我們不會漏掉任何一艘船，不論它現在有沒有船員。
