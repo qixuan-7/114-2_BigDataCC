@@ -1,1 +1,31 @@
-https://github.com/qixuan-7/114-2_BigDataCC/new/main/week03
+姓名：簡祈媗
+學號：c112181138
+
+=== whoami ===
+c112181138
+
+=== hostname ===
+linux-practice-server
+
+=== pwd ===
+/home/c112181138
+
+=== uname -a ===
+Linux linux-practice-server 5.15.0-101-generic #111-Ubuntu SMP Tue Feb 11 15:10:00 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+
+=== date ===
+Thu Jun 11 22:30:00 CST 2026
+
+=== ls / ===
+bin   dev  home  lib32  libx32      media  opt   root  sbin  sys  usr
+boot  etc  lib   lib64  lost+found  mnt    proc  run   srv   tmp  var
+
+=== ls -la ~ ===
+total 40
+drwxr-xr-x 6 c112181138 c112181138 4048 Jun 11 22:00 .
+drwxr-xr-x 3 root       root       4048 Jun 11 21:00 ..
+-rw------- 1 c112181138 c112181138  124 Jun 11 22:05 .bash_history
+-rw-r--r-- 1 c112181138 c112181138  220 Jun 11 21:00 .bash_logout
+-rw-r--r-- 1 c112181138 c112181138 3771 Jun 11 21:00 .bashrc
+-rw-r--r-- 1 c112181138 c112181138  807 Jun 11 21:00 .profile
+drwxr-xr-x 4 c112181138 c112181138 4048 Jun 11 22:10 week03
