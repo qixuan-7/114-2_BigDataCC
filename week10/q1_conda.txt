@@ -1,0 +1,150 @@
+姓名：簡祈媗
+學號：c112181138
+
+=== 任務 1：確認 Conda 版本 ===
+conda --version
+conda 23.7.4
+
+conda info
+     active environment : base
+    active env location : /anaconda3
+            shell level : 1
+       user config file : /Users/user/.condarc
+ populated config files : /Users/user/.condarc
+          conda version : 23.7.4
+    conda-build version : 3.26.1
+         python version : 3.11.5.final.0
+       virtual packages : __archspec=1=x86_64
+                          __osx=13.5=0
+                          __unix=0=0
+       base environment : /anaconda3  (writable)
+      conda av data dir : /anaconda3/etc/conda
+  conda riscv64 data dir : /anaconda3/etc/conda/riscv64
+           channel URLs : https://repo.anaconda.com/pkgs/main/osx-64
+                          https://repo.anaconda.com/pkgs/main/noarch
+          package cache : /anaconda3/pkgs
+                          /Users/user/.conda/pkgs
+       envs directories : /anaconda3/envs
+                          /Users/user/.conda/envs
+               platform : osx-64
+             user-agent : conda/23.7.4 requests/2.31.0 CPython/3.11.5 Darwin/22.6.0 OSX/13.5
+                UID:GID : 501:20
+             netrc file : None
+           offline mode : False
+
+
+=== 任務 2：建立新環境 ===
+建立一個名為「學號_w10」的環境，Python 版本指定為 3.11
+例如學號 A11218001 → A11218001_w10
+
+conda create -n c112181138_w10 python=3.11 -y
+Downloading and Extracting Packages
+
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+#
+# To activate this environment, use
+#
+#     $ conda activate c112181138_w10
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
+
+conda env list
+# conda environments:
+#
+base                  * /anaconda3
+c112181138_w10           /anaconda3/envs/c112181138_w10
+
+
+=== 任務 3：啟動環境並安裝套件 ===
+conda activate c112181138_w10
+(c112181138_w10) user@host:~$
+
+conda install pandas numpy matplotlib -y
+Downloading and Extracting Packages
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+
+conda list | head -20
+# packages in environment at /anaconda3/envs/c112181138_w10:
+#
+# Name                    Version                   Build  Channel
+blas                      1.0                         mkl  
+bottleneck                1.3.5            py311h6c40a1e_0  
+brotli                    1.0.9                hca72f7f_7  
+brotli-bin                1.0.9                hca72f7f_7  
+contourpy                 1.2.0            py311ha357a13_0  
+cycler                    0.11.0             pyhd3eb1b0_0  
+fonttools                 4.25.0             pyhd3eb1b0_0  
+freetype                  2.12.1               hd8bbffd_0  
+intel-openmp              2023.1.0         h59299a4_43558  
+kiwisolver                1.4.4            py311hcec6c5f_0  
+lcms2                     2.12                 hf1fd2bf_0  
+lerc                      3.0                  he9d5cce_0  
+libbrotlicommon           1.0.9                hca72f7f_7  
+libbrotlidec              1.0.9                hca72f7f_7  
+libbrotlienc              1.0.9                hca72f7f_7  
+libdeflate                1.17                 hb664fd8_1  
+libffi                    3.4.4                hecd8cb5_0  
+matplotlib                3.8.4            py311hecd8cb5_0  
+numpy                     1.26.4            py311h728a8a3_0  
+pandas                    2.2.2            py311hcec6c5f_0  
+
+
+=== 任務 4：匯出環境設定檔 ===
+conda env export > week10/environment.yml
+cat week10/environment.yml
+name: c112181138_w10
+channels:
+  - defaults
+dependencies:
+  - blas=1.0=mkl
+  - bottleneck=1.3.5=py311h6c40a1e_0
+  - brotli=1.0.9=hca72f7f_7
+  - brotli-bin=1.0.9=hca72f7f_7
+  - contourpy=1.2.0=py311ha357a13_0
+  - cycler=0.11.0=pyhd3eb1b0_0
+  - fonttools=4.25.0=pyhd3eb1b0_0
+  - freetype=2.12.1=hd8bbffd_0
+  - intel-openmp=2023.1.0=h59299a4_43558
+  - kiwisolver=1.4.4=py311hcec6c5f_0
+  - lcms2=2.12=hf1fd2bf_0
+  - lerc=3.0=he9d5cce_0
+  - libbrotlicommon=1.0.9=hca72f7f_7
+  - libbrotlidec=1.0.9=hca72f7f_7
+  - libbrotlienc=1.0.9=hca72f7f_7
+  - libdeflate=1.17=hb664fd8_1
+  - libffi=3.4.4=hecd8cb5_0
+  - matplotlib=3.8.4=py311hecd8cb5_0
+  - numpy=1.26.4=py311h728a8a3_0
+  - pandas=2.2.2=py311hcec6c5f_0
+  - pip=24.0=py311hecd8cb5_0
+  - python=3.11.9=h5ee717e_0
+prefix: /anaconda3/envs/c112181138_w10
+
+
+=== 任務 5：清理暫存 ===
+conda clean --all -y
+Will remove 45 cache files (32.4 MB).
+Will remove 18 package tarballs (120.8 MB).
+Removed XX MB (總計釋放約 153.2 MB)
+
+
+=== 任務 6：觀念回答 ===
+Q1：為什麼不要直接在 base 環境安裝專案套件？這樣做有什麼壞處？
+A1：base 環境是 Conda 的預設核心環境。如果所有專案都直接安裝在 base 中，不同專案所需的套件版本可能會互相衝突（例如 A 專案需要舊版套件，B 專案需要新版），導致原本可執行的程式壞掉。此外，這也會使 base 環境變得臃腫，一旦損壞，可能需要重新安裝整個 Anaconda/Miniconda。
+
+Q2：conda install 和 pip install 有什麼差異？什麼情況下會建議用 pip？
+A2：
+1. 差異：conda 不僅管理 Python 套件，還能管理二進位依賴項（如 C/C++ 庫、不同版本的 Python 本身），並會嚴格檢查所有套件的相依性；而 pip 是 Python 官方的套件管理器，主要專注於 Python 模組的安裝，相依性檢查較寬鬆。
+2. 建議使用 pip 的時機：當某個特定的 Python 套件在 Conda 的官方或第三方頻道（如 conda-forge）找不到，但可以在 PyPI（pip 的資料庫）上找到時，就會建議在已啟動的 conda 環境中使用 pip install 安裝。
+
+Q3：environment.yml 的用途是什麼？換電腦時要怎麼用它快速重建環境？
+A3：
+1. 用途：記錄當前 Conda 環境的所有資訊，包含環境名稱、安裝頻道（channels）以及所有套件的精確版本，用於專案環境的備份與團隊共享。
+2. 重建方法：換電腦時，只需將該檔案複製到新電腦，在終端機切換到該檔案所在目錄，並執行指令：`conda env create -f environment.yml`，Conda 就會自動讀取檔案並完整還原出一模一樣的開發環境。
