@@ -1,0 +1,43 @@
+姓名：簡祈媗
+學號：c112181138
+
+=== 步驟 1：mkdir week03test ===
+（貼上結果，無輸出則寫「無輸出」）
+無輸出
+
+=== 步驟 2：cd week03test ===
+（貼上結果）
+/home/c112181138/week03test
+
+=== 步驟 3：建立三個檔案 ===
+使用的指令：
+touch hello.txt learning.txt vm.txt
+
+=== 步驟 4：ls -l ===
+（貼上結果）
+total 0
+-rw-r--r-- 1 c112181138 c112181138 0 Jun 11 22:35 hello.txt
+-rw-r--r-- 1 c112181138 c112181138 0 Jun 11 22:35 learning.txt
+-rw-r--r-- 1 c112181138 c112181138 0 Jun 11 22:35 vm.txt
+
+=== 步驟 5：cp hello.txt hello_backup.txt ===
+（貼上結果）
+無輸出
+
+=== 步驟 6：mv vm.txt virtualization.txt ===
+（貼上結果）
+無輸出
+
+=== 步驟 7：ls -l（最終結果） ===
+（貼上結果）
+total 0
+-rw-r--r-- 1 c112181138 c112181138 0 Jun 11 22:35 hello.txt
+-rw-r--r-- 1 c112181138 c112181138 0 Jun 11 22:36 hello_backup.txt
+-rw-r--r-- 1 c112181138 c112181138 0 Jun 11 22:35 learning.txt
+-rw-r--r-- 1 c112181138 c112181138 0 Jun 11 22:37 virtualization.txt
+
+=== 問答 ===
+Q：最終目錄中有哪些檔案？和步驟 4 相比，發生了什麼變化？
+A：
+最終目錄裡一共有四個檔案：`hello.txt`、`hello_backup.txt`、`learning.txt`、`virtualization.txt`。
+和步驟 4 相比，目錄裡多出了一個複製出來的備份檔 `hello_backup.txt`；另外原本的 `vm.txt` 消失了，因為它被重新命名（移動）變成了 `virtualization.txt`。
